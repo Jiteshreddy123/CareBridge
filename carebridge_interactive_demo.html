@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CareBridge NCG — Multilingual Cancer Follow-up & Care-Instruction Closure Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Noto+Sans+Telugu:wght@400;500;600;700&family=Noto+Sans+Tamil:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&family=Noto+Sans+Kannada:wght@400;500;600;700&family=Noto+Sans+Malayalam:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-parchment: #F8F6F1;
+  --surface: #FFFFFF;
+  --surface-warm: #FAF8F5;
+  --surface-muted: #EFECE4;
+  --ink: #1B2A27;
+  --ink-soft: #4A5B57;
+  --muted: #7A8985;
+  --border: #E2DDD2;
+  --border-strong: #CFC8BA;
+  --spruce: #1C4A40;
+  --spruce-light: #2C6E5F;
+  --spruce-tint: #E5EEEB;
+  --spruce-dark: #12332C;
+  --amber: #B9812E;
+  --amber-tint: #F6ECD8;
+  --amber-dark: #7A5717;
+  --brick: #B34A3B;
+  --brick-tint: #F5E5E0;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-xl: 28px;
+  --shadow-soft: 0 2px 8px rgba(27, 42, 39, 0.05);
+  --shadow-card: 0 6px 20px -2px rgba(27, 42, 39, 0.06);
+  --shadow-modal: 0 24px 48px -12px rgba(20, 35, 30, 0.22);
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--sans);
+  background: var(--bg-parchment);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* Typography */
+h1, h2, h3, .font-serif { font-family: var(--serif); font-weight: 600; letter-spacing: -0.015em; color: var(--ink); }
+p { margin: 0; }
+a { color: inherit; text-decoration: none; }
+button { font-family: var(--sans); cursor: pointer; border: none; background: none; }
+input, select, textarea { font-family: var(--sans); }
+
+/* Buttons & UI Primitives */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  padding: 9px 18px; border-radius: 999px; font-size: 13px; font-weight: 600;
+  transition: transform 0.12s ease, background 0.15s ease, border-color 0.15s ease;
+  white-space: nowrap; border: 1px solid transparent;
+}
+.btn:active { transform: scale(0.97); }
+.btn-primary { background: var(--spruce); color: #fff; }
+.btn-primary:hover { background: var(--spruce-light); }
+.btn-ghost { background: transparent; color: var(--spruce); border-color: var(--border-strong); }
+.btn-ghost:hover { border-color: var(--spruce); background: var(--surface-warm); }
+.btn-quiet { background: var(--surface-muted); color: var(--ink); }
+.btn-quiet:hover { background: var(--border); }
+.btn-amber { background: var(--amber); color: #fff; }
+.btn-amber:hover { background: #9E6B24; }
+.btn-sm { padding: 6px 13px; font-size: 12px; }
+.btn-block { width: 100%; }
+
+/* Badges & Pills */
+.pill {
+  display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px;
+  border-radius: 999px; font-size: 11.5px; font-weight: 700;
+}
+.pill-done { background: var(--spruce-tint); color: var(--spruce); border: 1px solid rgba(28, 74, 64, 0.2); }
+.pill-current { background: var(--amber-tint); color: var(--amber-dark); border: 1px solid rgba(185, 129, 46, 0.25); }
+.pill-attn { background: var(--brick-tint); color: var(--brick); border: 1px solid rgba(179, 74, 59, 0.25); }
+.pill-pending { background: var(--surface-muted); color: var(--muted); border: 1px solid var(--border); }
+
+/* Cards & Layout */
+.card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 22px; box-shadow: var(--shadow-card);
+}
+.grid { display: grid; gap: 16px; }
+.flex { display: flex; }
+.between { justify-content: space-between; }
+.center { align-items: center; }
+.gap8 { gap: 8px; }
+.gap12 { gap: 12px; }
+.gap16 { gap: 16px; }
+.mb8 { margin-bottom: 8px; }
+.mb12 { margin-bottom: 12px; }
+.mb16 { margin-bottom: 16px; }
+.mb20 { margin-bottom: 20px; }
+.small { font-size: 12px; }
+.muted { color: var(--muted); }
+
+/* Top Header Bar */
+.micro-bar {
+  background: #15221F; color: #D5DFDC; font-size: 11px; padding: 6px 24px;
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
+}
+.micro-badge {
+  background: rgba(44, 110, 95, 0.4); color: #8DE0CB; padding: 2px 7px;
+  border-radius: 4px; font-weight: 700; font-size: 9.5px; text-transform: uppercase;
+}
+.header {
+  position: sticky; top: 0; z-index: 40; background: rgba(248, 246, 241, 0.95);
+  backdrop-filter: blur(8px); border-bottom: 1px solid var(--border);
+  padding: 12px 28px; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.brand { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+.brand-mark {
+  width: 36px; height: 36px; border-radius: 11px; background: var(--spruce);
+  color: #fff; display: flex; align-items: center; justify-content: center; font-size: 18px;
+}
+.brand-title { font-family: var(--serif); font-weight: 700; font-size: 19px; color: var(--ink); }
+.brand-ncg { font-family: var(--sans); font-weight: 800; font-size: 14px; color: var(--spruce-light); }
+
+/* Language Selector Dropdown */
+.lang-dropdown-wrap { position: relative; }
+.lang-trigger {
+  display: flex; align-items: center; gap: 7px; background: var(--surface);
+  border: 1px solid var(--border); padding: 7px 13px; border-radius: 999px;
+  font-size: 12.5px; font-weight: 600; color: var(--ink); box-shadow: var(--shadow-soft);
+}
+.lang-menu {
+  position: absolute; right: 0; top: calc(100% + 6px); width: 270px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md);
+  box-shadow: var(--shadow-modal); z-index: 60; overflow: hidden; max-height: 380px; overflow-y: auto;
+}
+.lang-item {
+  display: flex; align-items: center; justify-content: space-between; padding: 10px 14px;
+  width: 100%; border-bottom: 1px solid var(--surface-warm); text-align: left; transition: background 0.1s;
+}
+.lang-item:hover { background: var(--surface-warm); }
+.lang-item.active { background: var(--spruce-tint); font-weight: 700; color: var(--spruce); }
+
+/* Role Switcher Tabs */
+.role-pills {
+  display: flex; background: var(--surface); border: 1px solid var(--border);
+  padding: 3px; border-radius: 999px; box-shadow: var(--shadow-soft);
+}
+.role-pill {
+  padding: 6px 14px; border-radius: 999px; font-size: 12px; font-weight: 700;
+  color: var(--ink-soft); transition: all 0.15s ease;
+}
+.role-pill.active { background: var(--spruce); color: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+
+/* Hero Walkthrough Banner */
+.hero-banner {
+  background: #182622; color: #EDEAE1; padding: 10px 24px; border-bottom: 1px solid #2B3D37;
+  display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 12px;
+}
+.hero-timeline { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; margin-top: 6px; }
+.hero-dot { height: 4px; border-radius: 2px; background: #334842; cursor: pointer; }
+.hero-dot.done { background: #52B097; }
+.hero-dot.active { background: #E6B566; box-shadow: 0 0 6px rgba(230, 181, 102, 0.6); }
+
+/* Journey Stage Rail */
+.rail-container {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 22px; box-shadow: var(--shadow-card);
+}
+.rail-track { position: relative; display: flex; justify-content: space-between; align-items: flex-start; padding: 16px 6px 6px; }
+.rail-bg-line { position: absolute; left: 24px; right: 24px; top: 27px; height: 2px; background: var(--border); z-index: 0; }
+.rail-fill-line { position: absolute; left: 24px; top: 27px; height: 2px; background: var(--spruce); z-index: 1; transition: width 0.3s; }
+.rail-node { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; text-align: center; width: 14%; cursor: pointer; }
+.rail-circle {
+  width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--border-strong);
+  background: var(--surface); display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; color: var(--muted); margin-bottom: 7px;
+}
+.rail-node.done .rail-circle { background: var(--spruce); border-color: var(--spruce); color: #fff; }
+.rail-node.current .rail-circle { background: var(--amber); border-color: var(--amber); color: #fff; box-shadow: 0 0 0 5px var(--amber-tint); }
+.rail-node.attn .rail-circle { background: var(--brick); border-color: var(--brick); color: #fff; box-shadow: 0 0 0 5px var(--brick-tint); }
+.rail-label { font-size: 11px; font-weight: 600; color: var(--ink-soft); line-height: 1.25; }
+.rail-node.current .rail-label { color: var(--amber-dark); font-weight: 700; }
+
+/* Phone Mockup Frame for Patient Digital Pass */
+.phone-outer { display: flex; justify-content: center; padding: 20px; }
+.phone-device {
+  width: 390px; min-height: 740px; background: var(--bg-parchment);
+  border-radius: 44px; box-shadow: 0 0 0 10px var(--spruce), 0 35px 70px -15px rgba(27,42,39,0.45);
+  overflow: hidden; display: flex; flex-direction: column; position: relative; border: 1px solid var(--border);
+}
+.phone-notch {
+  width: 130px; height: 22px; background: var(--spruce);
+  border-bottom-left-radius: 14px; border-bottom-right-radius: 14px;
+  margin: 0 auto; z-index: 50;
+}
+.phone-screen { flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
+
+/* Patient Pass Header */
+.pass-header {
+  background: linear-gradient(135deg, var(--spruce) 0%, var(--spruce-light) 65%, var(--spruce-dark) 100%);
+  color: #fff; padding: 20px 20px 22px; border-bottom-left-radius: var(--radius-xl); border-bottom-right-radius: var(--radius-xl);
+  position: relative; overflow: hidden;
+}
+.pass-content { padding: 16px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
+
+/* Action Cards */
+.action-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-md); padding: 16px; box-shadow: var(--shadow-soft);
+  position: relative; transition: border-color 0.15s;
+}
+.action-card:hover { border-color: var(--spruce-light); }
+.action-card.done-task { border-color: #B9DEC9; background: #F6FBF8; }
+
+/* Modal Backdrop */
+.modal-backdrop {
+  position: fixed; inset: 0; background: rgba(20, 35, 30, 0.65);
+  backdrop-filter: blur(4px); z-index: 90; display: flex; align-items: center; justify-content: center; padding: 20px;
+}
+.modal {
+  background: var(--surface); border-radius: var(--radius-lg); border: 1px solid var(--border);
+  box-shadow: var(--shadow-modal); width: 100%; max-width: 480px; max-height: 85vh; overflow-y: auto; padding: 26px;
+}
+.modal-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+.close-btn { width: 30px; height: 30px; border-radius: 50%; background: var(--surface-muted); display: flex; align-items: center; justify-content: center; font-size: 14px; color: var(--ink-soft); }
+.close-btn:hover { background: var(--border); }
+
+/* QR Code Display */
+.qr-box {
+  width: 190px; height: 190px; margin: 16px auto; background: #fff;
+  border: 2px solid var(--ink); border-radius: 16px; padding: 10px;
+  display: flex; align-items: center; justify-content: center; position: relative;
+}
+
+/* Sparkline SVG */
+.spark-svg { width: 100%; height: 75px; overflow: visible; }
+
+/* Confetti overlay */
+.confetti-badge {
+  animation: popIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+@keyframes popIn { 0% { transform: scale(0.6); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+
+/* Table styling for Clinician */
+table { width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; }
+th { padding: 10px 14px; border-bottom: 1px solid var(--border); font-size: 11.5px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+td { padding: 12px 14px; border-bottom: 1px solid var(--surface-warm); vertical-align: middle; }
+tr:hover td { background: var(--surface-warm); }
+
+@media (max-width: 860px) {
+  .header { padding: 10px 14px; flex-wrap: wrap; }
+  .phone-device { width: 100%; border-radius: 0; min-height: 100vh; box-shadow: none; border: none; }
+  .phone-outer { padding: 0; }
+  .phone-notch { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOP MICRO-BAR -->
+<div class="micro-bar">
+  <div class="flex center gap8">
+    <span class="micro-badge">NCG Platform</span>
+    <span>Assistive Follow-up Closure Platform • National Cancer Grid Network</span>
+  </div>
+  <div class="flex center gap16">
+    <span>Closure KPI: <strong style="color:#52E0C4">85% Target</strong> (Baseline: 72%)</span>
+    <button class="btn btn-sm btn-amber" onclick="toggleHeroDemo()" style="padding:3px 10px; font-size:11px;">
+      ✨ 10-Step Interactive Demo
+    </button>
+  </div>
+</div>
+
+<!-- MAIN HEADER -->
+<header class="header">
+  <div class="brand" onclick="switchRole('clinician')">
+    <div class="brand-mark">⚕</div>
+    <div>
+      <div class="flex center gap8">
+        <span class="brand-title">CareBridge</span>
+        <span class="brand-ncg">NCG</span>
+      </div>
+      <p class="small muted" style="font-size:10.5px;">Multilingual Follow-up &amp; Instruction Closure</p>
+    </div>
+  </div>
+
+  <!-- Role Switcher -->
+  <div class="role-pills">
+    <button class="role-pill" id="pill-patient" onclick="switchRole('patient')">🧑 Patient Pass</button>
+    <button class="role-pill" id="pill-clinician" onclick="switchRole('clinician')">🩺 Doctor Portal</button>
+    <button class="role-pill" id="pill-caregiver" onclick="switchRole('caregiver')">🤝 Caregiver</button>
+    <button class="role-pill" id="pill-queue" onclick="switchRole('queue')">⚠️ Closure Queue</button>
+    <button class="role-pill" id="pill-audit" onclick="switchRole('audit')">🛡️ Audit Log</button>
+  </div>
+
+  <!-- Pan-Indian Language Dropdown (11 Languages) -->
+  <div class="lang-dropdown-wrap">
+    <button class="lang-trigger" onclick="toggleLangMenu()">
+      <span>🌐</span>
+      <span id="activeLangName">తెలుగు (Telugu)</span>
+      <span style="font-size:10px; opacity:0.6;">▼</span>
+    </button>
+    <div class="lang-menu" id="langMenu" style="display:none;">
+      <!-- Populated via JS -->
+    </div>
+  </div>
+</header>
+
+<!-- HERO 10-STEP DEMO BANNER -->
+<div class="hero-banner" id="heroBanner" style="display:none;">
+  <div>
+    <div class="flex center gap8">
+      <span style="color:#E6B566; font-weight:700; font-size:11px; text-transform:uppercase;">Interactive Demo Step <span id="heroStepNum">1</span> of 10</span>
+      <span class="muted">•</span>
+      <span id="heroStepTitle" style="font-weight:700; color:#fff;">Doctor opens patient record</span>
+    </div>
+    <div id="heroStepDesc" style="color:#C6D4D0; font-size:11.5px; margin-top:2px;">
+      Doctor reviews Ramesh Varma (Stage II Colorectal) and prescribes pre-chemo labs.
+    </div>
+  </div>
+  <div class="flex center gap8">
+    <button class="btn btn-sm btn-quiet" onclick="resetDemo()">↺ Reset</button>
+    <button class="btn btn-sm btn-primary" style="background:#2C6E5F;" onclick="advanceDemo()">Next Step →</button>
+    <button onclick="toggleHeroDemo()" style="color:#8C9B97; font-size:14px; margin-left:6px;">✕</button>
+  </div>
+</div>
+
+<!-- ROOT APP VIEWPORT -->
+<div id="appRoot">
+  <!-- Dynamically Rendered by View Manager -->
+</div>
+
+<!-- MODALS CONTAINER -->
+<div id="modalContainer"></div>
+
+<script>
+/* =========================================================================
+   CAREBRIDGE NCG — STANDALONE INTERACTIVE ENGINE
+   Full state, 11 Indian languages, Journey Rail, Wellbeing Sparkline, and QR
+   ========================================================================= */
+
+// 1. PAN-INDIAN 11 LANGUAGES DATA
+const LANGUAGES = [
+  { code: 'en', name: 'English', native: 'English', region: 'Pan-India' },
+  { code: 'hi', name: 'Hindi', native: 'हिन्दी', region: 'North / Central' },
+  { code: 'te', name: 'Telugu', native: 'తెలుగు', region: 'Andhra & Telangana' },
+  { code: 'ta', name: 'Tamil', native: 'தமிழ்', region: 'Tamil Nadu' },
+  { code: 'kn', name: 'Kannada', native: 'ಕನ್ನಡ', region: 'Karnataka' },
+  { code: 'ml', name: 'Malayalam', native: 'മലയാളം', region: 'Kerala' },
+  { code: 'bn', name: 'Bengali', native: 'বাংলা', region: 'West Bengal & NE' },
+  { code: 'mr', name: 'Marathi', native: 'मराठी', region: 'Maharashtra' },
+  { code: 'gu', name: 'Gujarati', native: 'ગુજરાતી', region: 'Gujarat' },
+  { code: 'pa', name: 'Punjabi', native: 'ਪੰਜਾਬੀ', region: 'Punjab' },
+  { code: 'or', name: 'Odia', native: 'ଓଡ଼ିଆ', region: 'Odisha' },
+];
+
+// 2. MULTILINGUAL DICTIONARY
+const DICTIONARY = {
+  en: {
+    nextSteps: "Your Upcoming Actions",
+    subhead: "Please complete these actions before your next oncology review",
+    nextAppt: "Next Oncology Visit",
+    showQR: "Show Desk QR",
+    completed: "I have completed this",
+    viewDetails: "View Details",
+    needHelp: "Need Help?",
+    helpDesc: "Experiencing travel, financial, or test difficulties?",
+    symptomCheckin: "Daily Wellbeing Check-in",
+    summarySheet: "Care Summary Sheet",
+    stages: ["Diagnosis", "Investigations", "Staging", "Planning", "Active Treatment", "Monitoring", "Survivorship"],
+    task1_title: "Get Complete Blood Count (CBC) test done",
+    task1_why: "Doctor needs to verify white blood cell counts before giving Chemotherapy Cycle 3.",
+    task1_what: "Visit Hospital Central Lab, Ground Floor before Tuesday morning. Fasting not required.",
+    task1_where: "Central Laboratory, Ground Floor",
+    task2_title: "Serum Creatinine Kidney Function Test",
+    task2_why: "Ensures kidney clearance is healthy for intravenous chemotherapy medications.",
+    task2_what: "Collect lab slip from Room 104 and give blood sample.",
+    task2_where: "Biochemistry Section, 1st Floor",
+  },
+  hi: {
+    nextSteps: "आपके आगामी कार्य",
+    subhead: "कृपया अपनी अगली मुलाकात से पहले इन निर्देशों को पूरा करें",
+    nextAppt: "अगली अस्पताल मुलाकात",
+    showQR: "डेस्क QR दिखाएं",
+    completed: "मैंने यह पूरा कर लिया है",
+    viewDetails: "विवरण देखें",
+    needHelp: "मदद चाहिए?",
+    helpDesc: "अस्पताल आने, पैसे या जांच समझने में परेशानी है?",
+    symptomCheckin: "दैनिक स्वास्थ्य जांच",
+    summarySheet: "यात्रा सारांश पत्रक",
+    stages: ["निदान", "जांच एवं परीक्षण", "स्टेजिंग", "उपचार योजना", "सक्रिय उपचार", "प्रतिक्रिया निगरानी", "उत्तरजीविता"],
+    task1_title: "पूर्ण रक्त गणना (CBC) परीक्षण करवाएं",
+    task1_why: "कीमोथेरेपी चक्र 3 देने से पहले डॉक्टर को आपके रक्त कोशिकाओं की जांच करनी है।",
+    task1_what: "मंगलवार सुबह से पहले अस्पताल की सेंट्रल लैब में जाएं। भूखे पेट रहने की आवश्यकता नहीं है।",
+    task1_where: "सेंट्रल लैबोरेट्री, भूतल (Ground Floor)",
+    task2_title: "सीरम क्रिएटिनिन गुर्दा जांच",
+    task2_why: "कीमोथेरेपी दवाओं को सुरक्षित रूप से निकालने के लिए गुर्दे की कार्यप्रणाली सुनिश्चित करता है।",
+    task2_what: "कमरा 104 से पर्ची लें और रक्त का नमूना दें।",
+    task2_where: "बायोकेमिस्ट्री विभाग, पहली मंजिल",
+  },
+  te: {
+    nextSteps: "మీ తదుపరి చేయవలసిన పనులు",
+    subhead: "మీ తదుపరి ఆంకాలజీ సమీక్షకు ముందు దయచేసి ఈ సూచనలను పూర్తి చేయండి",
+    nextAppt: "తదుపరి క్లినిక్ సందర్శన",
+    showQR: "డెస్క్ QR చూపించండి",
+    completed: "నేను దీనిని పూర్తి చేశాను",
+    viewDetails: "వివరాలు చూడండి",
+    needHelp: "సహాయం కావాలా?",
+    helpDesc: "ప్రయాణం, ఖర్చు లేదా పరీక్షలు అర్థం కాకపోతే సంప్రదించండి",
+    symptomCheckin: "రోజువారీ శ్రేయస్సు తనిఖీ",
+    summarySheet: "ప్రయాణ సారాంశ పత్రం",
+    stages: ["రోగ నిర్ధారణ", "పరీక్షలు", "స్టేజింగ్", "చికిత్స ప్రణాళిక", "క్రియాశీల చికిత్స", "స్పందన పర్యవేక్షణ", "సర్వైవర్‌షిప్"],
+    task1_title: "రక్త పరీక్ష (CBC) చేయించుకోండి",
+    task1_why: "కీమోథెరపీ సైకిల్ 3 ఇచ్చేముందు తెల్ల రక్త కణాల సంఖ్యను తనిఖీ చేయడానికి వైద్యులకు ఈ రిపోర్ట్ అవసరం.",
+    task1_what: "మంగళవారం ఉదయానికి ముందు గ్రౌండ్ ఫ్లోర్‌లోని సెంట్రల్ ల్యాబ్‌కు వెళ్లండి. ఖాళీ కడుపుతో ఉండనవసరం లేదు.",
+    task1_where: "సెంట్రల్ లాబొరేటరీ, గ్రౌండ్ ఫ్లోర్",
+    task2_title: "సీరం క్రియాటినిన్ కిడ్నీ పరీక్ష",
+    task2_why: "కీమోథెరపీ మందులు సురక్షితంగా పనిచేయడానికి కిడ్నీల పనితీరు బాగుందని నిర్ధారించుకోవాలి.",
+    task2_what: "రూమ్ 104 నుండి స్లిప్ తీసుకుని రక్తం శాంపిల్ ఇవ్వండి.",
+    task2_where: "బయోకెమిస్ట్రీ విభాగం, 1వ అంతస్తు",
+  },
+  ta: {
+    nextSteps: "உங்கள் வரவிருக்கும் பணிகள்",
+    subhead: "அடுத்த பரிசோதனைக்கு முன் இந்த வழிமுறைகளைப் பின்பற்றவும்",
+    nextAppt: "அடுத்த மருத்துவமனை சந்திப்பு",
+    showQR: "QR குறியீட்டைக் காட்டு",
+    completed: "நான் இதை முடித்துவிட்டேன்",
+    viewDetails: "விவரங்களை காண்க",
+    needHelp: "உதவி தேவையா?",
+    helpDesc: "பயணம், நிதி அல்லது பரிசோதனை பற்றிய உதவிக்கு தொடவும்",
+    symptomCheckin: "தினசரி நல்வாழ்வு பதிவு",
+    summarySheet: "பயண சுருக்க அறிக்கை",
+    stages: ["நோய் கண்டறிதல்", "பரிசோதனைகள்", "நிலைக் கணிப்பு", "சிகிச்சைத் திட்டம்", "செயலில் உள்ள சிகிச்சை", "கண்காணிப்பு", "தொடர் கவனிப்பு"],
+    task1_title: "முழு இரத்தப் பரிசோதனை (CBC) செய்யவும்",
+    task1_why: "கீமோதெரபி சுழற்சி 3-க்கு முன் இரத்த அணுக்களை சரிபார்க்க வேண்டும்.",
+    task1_what: "செவ்வாய்க்கிழமை காலைக்குள் தரைதள மத்திய ஆய்வகத்திற்கு செல்லவும்.",
+    task1_where: "மத்திய ஆய்வகம், தரைதளம்",
+    task2_title: "சீரம் கிரியேட்டினின் சிறுநீரக பரிசோதனை",
+    task2_why: "சிறுநீரக செயல்பாடு ஆரோக்கியமாக இருப்பதை உறுதி செய்கிறது.",
+    task2_what: "அறை 104-ல் சீட்டு பெற்று இரத்த மாதிரி வழங்கவும்.",
+    task2_where: "உயிர்வேதியியல் துறை, 1வது தளம்",
+  },
+  kn: {
+    nextSteps: "ನಿಮ್ಮ ಮುಂದಿನ ಕ್ರಮಗಳು",
+    subhead: "ಮುಂದಿನ ಪರಿಶೀಲನೆಗೆ ಮುಂಚಿತವಾಗಿ ಈ ಕ್ರಮಗಳನ್ನು ಪೂರ್ಣಗೊಳಿಸಿ",
+    nextAppt: "ಮುಂದಿನ ಆಸ್ಪತ್ರೆ ಭೇಟಿ",
+    showQR: "QR ಕೋಡ್ ತೋರಿಸಿ",
+    completed: "ನಾನು ಇದನ್ನು ಪೂರ್ಣಗೊಳಿಸಿದ್ದೇನೆ",
+    viewDetails: "ವಿವರ ವೀಕ್ಷಿಸಿ",
+    needHelp: "ಸಹಾಯ ಬೇಕೇ?",
+    helpDesc: "ಪ್ರಯಾಣ, ಖರ್ಚು ಅಥವಾ ಪರೀಕ್ಷೆಗಳ ಬಗ್ಗೆ ಸಹಾಯ ಬೇಕೇ?",
+    symptomCheckin: "ದೈನಂದಿನ ಆರೋಗ್ಯ ತಪಾಸಣೆ",
+    summarySheet: "ಪ್ರಯಾಣ ಸಾರಾಂಶ ಹಾಳೆ",
+    stages: ["ರೋಗನಿರ್ಣಯ", "ತನಿಖೆಗಳು", "ಸ್ಟೇಜಿಂಗ್", "ಯೋಜನೆ", "ಸಕ್ರಿಯ ಚಿಕಿತ್ಸೆ", "ಮೇಲ್ವಿಚಾರಣೆ", "ಉಳಿವಿನ ರಕ್ಷಣೆ"],
+    task1_title: "ಸಂಪೂರ್ಣ ರಕ್ತ ಪರೀಕ್ಷೆ (CBC) ಮಾಡಿಸಿಕೊಳ್ಳಿ",
+    task1_why: "ಕೀಮೋಥೆರಪಿ ಸೈಕಲ್ 3 ಕ್ಕೂ ಮುನ್ನ ರಕ್ತ ಕಣಗಳನ್ನು ಪರೀಕ್ಷಿಸಬೇಕಾಗಿದೆ.",
+    task1_what: "ಮಂಗಳವಾರ ಬೆಳಿಗ್ಗೆ ಮೊದಲು ನೆಲಮಹಡಿಯ ಕೇಂದ್ರ ಲ್ಯಾಬ್‌ಗೆ ಭೇಟಿ ನೀಡಿ.",
+    task1_where: "ಕೇಂದ್ರ ಪ್ರಯೋಗಾಲಯ, ನೆಲಮಹಡಿ",
+    task2_title: "ಸೀರಮ್ ಕ್ರಿಯೇಟಿನೈನ್ ಕಿಡ್ನಿ ಪರೀಕ್ಷೆ",
+    task2_why: "ಕಿಡ್ನಿ ಕಾರ್ಯನಿರ್ವಹಣೆಯನ್ನು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಲು.",
+    task2_what: "ಕೋಣೆ 104 ರಿಂದ ಸ್ಲಿಪ್ ಪಡೆದು ರಕ್ತದ ಮಾದರಿ ನೀಡಿ.",
+    task2_where: "ಬಯೋಕೆಮಿಸ್ಟ್ರಿ ವಿಭಾಗ, 1 ನೇ ಮಹಡಿ",
+  },
+  bn: {
+    nextSteps: "আপনার পরবর্তী পদক্ষেপসমূহ",
+    subhead: "আপনার পরবর্তী পর্যালোচনার আগে এই নির্দেশগুলি অনুসরণ করুন",
+    nextAppt: "পরবর্তী হাসপাতাল পরিদর্শন",
+    showQR: "ডেস্ক QR দেখান",
+    completed: "আমি এটি সম্পন্ন করেছি",
+    viewDetails: "বিস্তারিত দেখুন",
+    needHelp: "সাহায্য প্রয়োজন?",
+    helpDesc: "যাতায়াত, খরচ বা পরীক্ষা বুঝতে অসুবিধা হচ্ছে?",
+    symptomCheckin: "দৈনিক স্বাস্থ্য পরীক্ষা",
+    summarySheet: "যাত্রার সংক্ষিপ্ত বিবরণী",
+    stages: ["রোগ নির্ণয়", "পরীক্ষাসমূহ", "স্টেজিং", "পরিকল্পনা", "সক্রিয় চিকিৎসা", "পর্যবেক্ষণ", "সারভাইভারশিপ"],
+    task1_title: "সম্পূর্ণ রক্ত পরীক্ষা (CBC) করান",
+    task1_why: "কেমোথেরাপি চক্র ৩ দেওয়ার আগে রক্তের কোষ যাচাই করা জরুরি।",
+    task1_what: "মঙ্গলবার সকালের আগে সেন্ট্রাল ল্যাবে যান। খালি পেটে থাকার প্রয়োজন নেই।",
+    task1_where: "সেন্ট্রাল ল্যাবরেটরি, নিচতলা",
+    task2_title: "সিরাম ক্রিয়েটিনিন কিডনি পরীক্ষা",
+    task2_why: "কিডনির কার্যকারিতা সঠিক আছে কিনা নিশ্চিত করে।",
+    task2_what: "১০৪ নম্বর রুম থেকে স্লিপ নিয়ে রক্তের নমুনা দিন।",
+    task2_where: "বায়োকেমিস্ট্রি বিভাগ, ১ম তলা",
+  },
+};
+
+// Fallback resolver
+function t(key) {
+  const lang = State.language;
+  const dict = DICTIONARY[lang] || DICTIONARY['hi'] || DICTIONARY['en'];
+  return dict[key] || DICTIONARY['en'][key] || key;
+}
+
+// 3. APPLICATION STATE
+const State = {
+  role: 'patient', // patient | clinician | caregiver | queue | audit
+  language: 'te',
+  deviceMode: 'mobile', // mobile | desktop
+  heroStep: 0,
+  patient: {
+    id: "P-1001",
+    mrn: "NCG-HYD-9910",
+    name: "Ramesh Varma",
+    age: 58,
+    gender: "Male",
+    diagnosis: "Stage II Colorectal Carcinoma (Post-op Adjuvant)",
+    department: "Medical Oncology",
+    oncologist: "Dr. K. Rao",
+    cycle: 3,
+    totalCycles: 6,
+    nextAppt: "18 September 2026, 10:30 AM",
+    caregiver: "Suresh Varma (Son)",
+    phone: "+91 98490 12345"
+  },
+  tasks: [
+    {
+      id: "TASK-101",
+      titleKey: "task1_title",
+      whyKey: "task1_why",
+      whatKey: "task1_what",
+      whereKey: "task1_where",
+      dueDate: "16 September 2026",
+      category: "Blood Test",
+      status: "Pending", // Pending | Completed
+      urgent: true
+    },
+    {
+      id: "TASK-102",
+      titleKey: "task2_title",
+      whyKey: "task2_why",
+      whatKey: "task2_what",
+      whereKey: "task2_where",
+      dueDate: "16 September 2026",
+      category: "Kidney Function",
+      status: "Pending",
+      urgent: false
+    }
+  ],
+  wellbeingLog: [
+    { d: "05 Sep", energy: 2, pain: 3, nausea: 2 },
+    { d: "06 Sep", energy: 3, pain: 3, nausea: 2 },
+    { d: "07 Sep", energy: 3, pain: 2, nausea: 1 },
+    { d: "08 Sep", energy: 2, pain: 2, nausea: 2 },
+    { d: "09 Sep", energy: 3, pain: 2, nausea: 1 },
+    { d: "10 Sep", energy: 4, pain: 1, nausea: 1 },
+  ],
+  auditLogs: [
+    { time: "10 Sep 09:30", actor: "Dr. K. Rao", role: "Medical Oncologist", action: "Approved clinical instruction", details: "CBC & Creatinine orders approved for Cycle 3" },
+    { time: "10 Sep 09:31", actor: "CareBridge Queue", role: "System Service", action: "Dispatched digital pass", details: "Sent WhatsApp magic link in Telugu to patient phone" },
+    { time: "10 Sep 11:20", actor: "Suresh Varma", role: "Caregiver", action: "Accessed digital pass", details: "Viewed pre-chemo lab location & timing" },
+  ],
+  helpRequests: [
+    { patient: "Ramesh Varma", reason: "Transport difficulty from rural village", status: "Open", time: "2 hours ago" },
+  ]
+};
+
+// 4. VIEW RENDERERS
+function render() {
+  // Update header indicators
+  document.querySelectorAll('.role-pill').forEach(p => p.classList.remove('active'));
+  const activePill = document.getElementById('pill-' + State.role);
+  if (activePill) activePill.classList.add('active');
+
+  const curLang = LANGUAGES.find(l => l.code === State.language) || LANGUAGES[0];
+  document.getElementById('activeLangName').textContent = `${curLang.native} (${curLang.name})`;
+
+  // Render language menu items
+  const menu = document.getElementById('langMenu');
+  menu.innerHTML = LANGUAGES.map(l => `
+    <button class="lang-item ${l.code === State.language ? 'active' : ''}" onclick="setLanguage('${l.code}')">
+      <div>
+        <div style="font-size:13.5px; font-weight:700;">${l.native}</div>
+        <div style="font-size:11px; color:var(--muted);">${l.name} • ${l.region}</div>
+      </div>
+      ${l.code === State.language ? '<span style="color:var(--spruce); font-weight:800;">✓</span>' : ''}
+    </button>
+  `).join('');
+
+  // Render main screen
+  const root = document.getElementById('appRoot');
+  if (State.role === 'patient') {
+    root.innerHTML = renderPatientView();
+  } else if (State.role === 'clinician') {
+    root.innerHTML = renderClinicianView();
+  } else if (State.role === 'caregiver') {
+    root.innerHTML = renderCaregiverView();
+  } else if (State.role === 'queue') {
+    root.innerHTML = renderQueueView();
+  } else if (State.role === 'audit') {
+    root.innerHTML = renderAuditView();
+  }
+}
+
+/* ---- PATIENT VIEW (PHONE PASS OR EXPANDED) ---- */
+function renderPatientView() {
+  const p = State.patient;
+  const stages = t('stages') || DICTIONARY['en'].stages;
+  const pendingCount = State.tasks.filter(tk => tk.status !== 'Completed').length;
+
+  const contentHtml = `
+    <!-- Top Patient Header Card -->
+    <div class="pass-header">
+      <div class="flex between center">
+        <div class="flex center gap12">
+          <div style="width:42px; height:42px; border-radius:14px; background:rgba(255,255,255,0.14); border:1px solid rgba(255,255,255,0.25); display:flex; align-items:center; justify-content:center; font-family:var(--serif); font-size:20px; font-weight:700;">
+            ${p.name.charAt(0)}
+          </div>
+          <div>
+            <div style="font-size:10px; text-transform:uppercase; letter-spacing:0.06em; color:#A4DEC9; font-weight:700;">NCG Digital Follow-Up Pass</div>
+            <h2 style="color:#fff; font-size:18px; line-height:1.2; font-family:var(--serif);">${p.name}</h2>
+          </div>
+        </div>
+        <button class="btn btn-sm" onclick="openModal('qr')" style="background:rgba(255,255,255,0.16); color:#fff; border:1px solid rgba(255,255,255,0.25); padding:6px 12px;">
+          📱 ${t('showQR')}
+        </button>
+      </div>
+
+      <div style="margin-top:14px; padding-top:12px; border-top:1px solid rgba(255,255,255,0.15); display:flex; justify-content:space-between; font-size:11.5px; color:#D3EBE4;">
+        <span>MRN: <strong style="font-family:monospace; color:#fff;">${p.mrn}</strong></span>
+        <span>Cycle ${p.cycle} of ${p.totalCycles} (Colorectal)</span>
+      </div>
+    </div>
+
+    <div class="pass-content">
+      <!-- 7-Stage Longitudinal Journey Rail -->
+      <div class="card" style="padding:16px;">
+        <div class="flex between center mb8">
+          <div>
+            <span class="pill pill-done" style="font-size:10px;">Care Journey</span>
+            <div style="font-weight:700; font-size:14px; margin-top:2px;">Active Treatment — Cycle ${p.cycle} of ${p.totalCycles}</div>
+          </div>
+          <button class="btn btn-sm btn-ghost" onclick="openModal('summary')" style="font-size:11.5px; padding:4px 10px;">
+            📄 ${t('summarySheet')}
+          </button>
+        </div>
+
+        <div class="rail-track">
+          <div class="rail-bg-line"></div>
+          <div class="rail-fill-line" style="width:66%;"></div>
+          ${stages.map((st, i) => `
+            <div class="rail-node ${i < 4 ? 'done' : i === 4 ? 'current' : 'pending'}" onclick="alert('Stage: ${st}')">
+              <div class="rail-circle">${i < 4 ? '✓' : i === 4 ? '●' : (i+1)}</div>
+              <div class="rail-label">${st}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <!-- Quick Action Buttons: Wellbeing & Summary -->
+      <div class="grid" style="grid-template-columns:1fr 1fr; gap:10px;">
+        <div class="card" onclick="openModal('wellbeing')" style="padding:12px; cursor:pointer; display:flex; align-items:center; gap:10px;">
+          <div style="width:34px; height:34px; border-radius:10px; background:var(--spruce-tint); color:var(--spruce); display:flex; align-items:center; justify-content:center; font-size:16px;">❤️</div>
+          <div>
+            <div style="font-weight:700; font-size:12px;">${t('symptomCheckin')}</div>
+            <div class="small muted">7-day trend</div>
+          </div>
+        </div>
+        <div class="card" onclick="openModal('summary')" style="padding:12px; cursor:pointer; display:flex; align-items:center; gap:10px;">
+          <div style="width:34px; height:34px; border-radius:10px; background:var(--amber-tint); color:var(--amber-dark); display:flex; align-items:center; justify-content:center; font-size:16px;">📋</div>
+          <div>
+            <div style="font-weight:700; font-size:12px;">${t('summarySheet')}</div>
+            <div class="small muted">Print / Share</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Next Clinic Appointment -->
+      <div class="card" style="padding:16px;">
+        <div class="flex between center mb8">
+          <span style="font-size:11px; font-weight:700; text-transform:uppercase; color:var(--spruce);">📅 ${t('nextAppt')}</span>
+          <span class="pill pill-done">Confirmed</span>
+        </div>
+        <div style="font-size:16px; font-weight:700;">${p.nextAppt}</div>
+        <div class="small muted" style="margin-top:2px;">${p.oncologist} • ${p.department} (Room 204)</div>
+      </div>
+
+      <!-- Actionable Instructions (What / Why / Where / When) -->
+      <div>
+        <div class="flex between center mb8">
+          <span style="font-size:12px; font-weight:700; text-transform:uppercase; color:var(--ink-soft);">${t('nextSteps')} (${pendingCount})</span>
+          <span class="pill pill-done" style="font-size:10px;">Follow-up Closure</span>
+        </div>
+
+        <div class="grid" style="gap:12px;">
+          ${State.tasks.map((task, idx) => `
+            <div class="action-card ${task.status === 'Completed' ? 'done-task' : ''}">
+              <div class="flex between center mb8">
+                <span class="pill ${task.status === 'Completed' ? 'pill-done' : 'pill-current'}" style="font-size:10px;">
+                  ${task.category}
+                </span>
+                <span class="small muted">Due: ${task.dueDate}</span>
+              </div>
+
+              <h4 style="font-size:15px; font-weight:700; line-height:1.3; margin-bottom:6px;">
+                ${t(task.titleKey)}
+              </h4>
+              <p style="font-size:12px; color:var(--ink-soft); line-height:1.45; margin-bottom:12px;">
+                ${t(task.whyKey)}
+              </p>
+
+              <div style="background:var(--surface-warm); border-radius:10px; padding:9px 12px; font-size:11.5px; color:var(--ink); margin-bottom:12px;">
+                <div><strong>📍 Where:</strong> ${t(task.whereKey)}</div>
+                <div style="margin-top:2px;"><strong>ℹ️ Action:</strong> ${t(task.whatKey)}</div>
+              </div>
+
+              <div class="flex between center" style="padding-top:10px; border-top:1px solid var(--border);">
+                <button class="small" style="color:var(--spruce); font-weight:700;" onclick="openModal('taskDetail', ${idx})">
+                  ${t('viewDetails')} →
+                </button>
+                ${task.status === 'Completed' ? `
+                  <span class="pill pill-done confetti-badge">✓ Completed</span>
+                ` : `
+                  <button class="btn btn-primary btn-sm" onclick="completeTask('${task.id}')">
+                    ✓ ${t('completed')}
+                  </button>
+                `}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <!-- Need Help Banner -->
+      <div class="card" style="background:var(--amber-tint); border-color:#E8D2A8; padding:16px;">
+        <div class="flex center gap12">
+          <div style="font-size:24px;">❓</div>
+          <div style="flex:1;">
+            <div style="font-weight:700; font-size:13.5px; color:var(--amber-dark);">${t('needHelp')}</div>
+            <div class="small" style="color:#6A4B13; margin-top:1px;">${t('helpDesc')}</div>
+            <button class="btn btn-amber btn-sm" onclick="openModal('help')" style="margin-top:8px;">
+              Contact Care Coordinator
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  return `
+    <div class="phone-outer">
+      <div class="phone-device">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">${contentHtml}</div>
+      </div>
+    </div>
+  `;
+}
+
+/* ---- CLINICIAN PORTAL ---- */
+function renderClinicianView() {
+  const p = State.patient;
+  return `
+    <div style="max-width:1140px; margin:0 auto; padding:28px 20px;">
+      <div class="flex between center mb20 flex-wrap gap12">
+        <div>
+          <h1 style="font-size:26px;">Oncology Care-Instruction Closure Oversight</h1>
+          <p class="small muted">Active tracking of discharge instructions to ensure patients complete vital pre-chemo steps.</p>
+        </div>
+        <div class="flex gap8">
+          <button class="btn btn-ghost" onclick="openModal('upload')">📄 Upload Discharge Summary</button>
+          <button class="btn btn-primary" onclick="openModal('prescribe')">+ Prescribe Follow-Up</button>
+        </div>
+      </div>
+
+      <!-- 4 KPI CARDS -->
+      <div class="grid mb20" style="grid-template-columns:repeat(4,1fr);">
+        <div class="card">
+          <div class="small muted mb8">Active Loop Closure Rate</div>
+          <div style="font-family:var(--serif); font-size:32px; font-weight:700; color:var(--spruce);">85%</div>
+          <div class="small" style="color:var(--spruce); font-weight:600; margin-top:2px;">+13% over baseline (72%)</div>
+        </div>
+        <div class="card">
+          <div class="small muted mb8">Today's Prescribed Tasks</div>
+          <div style="font-family:var(--serif); font-size:32px; font-weight:700;">24</div>
+          <div class="small muted">Across Day Care & OPD</div>
+        </div>
+        <div class="card" style="border-color:#F0D29E; background:var(--amber-tint);">
+          <div class="small" style="color:var(--amber-dark); font-weight:700;">Awaiting Patient Closure</div>
+          <div style="font-family:var(--serif); font-size:32px; font-weight:700; color:var(--amber-dark);">5</div>
+          <div class="small" style="color:var(--amber-dark);">At-risk pre-cycle actions</div>
+        </div>
+        <div class="card">
+          <div class="small muted mb8">Open Assistance Requests</div>
+          <div style="font-family:var(--serif); font-size:32px; font-weight:700; color:var(--brick);">1</div>
+          <div class="small" style="color:var(--brick); font-weight:600;">Rural transit inquiry</div>
+        </div>
+      </div>
+
+      <!-- ACTIVE PATIENT QUEUE TABLE -->
+      <div class="card">
+        <div class="flex between center mb16">
+          <h3 style="font-size:18px;">Active Patient Instruction Queue</h3>
+          <span class="pill pill-done">National Cancer Grid Verified</span>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Patient</th>
+              <th>Diagnosis / Cycle</th>
+              <th>Prescribed Follow-Up</th>
+              <th>Due Date</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${State.tasks.map(task => `
+              <tr>
+                <td>
+                  <div style="font-weight:700;">${p.name}</div>
+                  <div class="small muted font-mono">${p.mrn}</div>
+                </td>
+                <td>
+                  <div>${p.diagnosis.split('(')[0]}</div>
+                  <div class="small" style="color:var(--spruce); font-weight:600;">Cycle ${p.cycle} of ${p.totalCycles}</div>
+                </td>
+                <td>
+                  <div style="font-weight:600;">${t(task.titleKey)}</div>
+                  <div class="small muted">📍 ${t(task.whereKey)}</div>
+                </td>
+                <td style="font-weight:600;">${task.dueDate}</td>
+                <td>
+                  <span class="pill ${task.status === 'Completed' ? 'pill-done' : 'pill-current'}">
+                    ${task.status === 'Completed' ? '✓ Closed' : '⏳ Patient Action Pending'}
+                  </span>
+                </td>
+                <td>
+                  <button class="btn btn-sm btn-quiet" onclick="switchRole('patient')">Open Digital Pass →</button>
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
+}
+
+/* ---- CAREGIVER VIEW ---- */
+function renderCaregiverView() {
+  const p = State.patient;
+  return `
+    <div style="max-width:800px; margin:0 auto; padding:28px 20px;">
+      <div class="card mb20">
+        <div class="flex between center mb12">
+          <div class="flex center gap12">
+            <div style="width:48px; height:48px; border-radius:14px; background:var(--spruce-tint); color:var(--spruce); display:flex; align-items:center; justify-content:center; font-size:24px;">🤝</div>
+            <div>
+              <span class="pill pill-done mb8">Authorized Family Caregiver</span>
+              <h2 style="font-size:20px;">${p.caregiver}</h2>
+              <div class="small muted">Caring for: <strong>${p.name}</strong> (${p.diagnosis})</div>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="alert('WhatsApp reminder sent to patient phone.')">
+            📲 Send WhatsApp Reminder
+          </button>
+        </div>
+        <p class="small muted" style="line-height:1.5;">
+          You are receiving synced notifications for ${p.name}'s pre-chemo blood investigations and appointment check-in pass.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3 style="font-size:16px; margin-bottom:12px;">Tasks You Need to Arrange</h3>
+        <div class="grid" style="gap:10px;">
+          ${State.tasks.map(task => `
+            <div style="padding:12px; background:var(--surface-warm); border:1px solid var(--border); border-radius:12px; display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <div style="font-weight:700; font-size:13.5px;">${t(task.titleKey)}</div>
+                <div class="small muted">Due: ${task.dueDate} • Location: ${t(task.whereKey)}</div>
+              </div>
+              <span class="pill ${task.status === 'Completed' ? 'pill-done' : 'pill-current'}">
+                ${task.status === 'Completed' ? 'Completed' : 'Pending'}
+              </span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/* ---- CLOSURE QUEUE VIEW ---- */
+function renderQueueView() {
+  return `
+    <div style="max-width:960px; margin:0 auto; padding:28px 20px;">
+      <div class="flex between center mb20">
+        <div>
+          <h1 style="font-size:24px;">At-Risk Follow-Up Closure Queue</h1>
+          <p class="small muted">Proactively identifying patients at risk of missing pre-chemotherapy safety milestones.</p>
+        </div>
+        <span class="pill pill-attn">1 Patient Flagged</span>
+      </div>
+
+      <div class="card mb20" style="border-color:#F5C2BC; background:var(--brick-tint);">
+        <div class="flex between center">
+          <div>
+            <div class="flex center gap8">
+              <span class="pill pill-attn" style="background:#B34A3B; color:#fff;">High Priority</span>
+              <strong style="font-size:15px;">${State.patient.name} (${State.patient.mrn})</strong>
+            </div>
+            <div class="small" style="color:var(--brick); margin-top:4px;">
+              Pre-chemo blood test unconfirmed. Chemotherapy scheduled in 48 hours (18 Sep).
+            </div>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="alert('Calling patient navigator & caregiver Suresh Varma...')">
+            📞 Call Patient / Caregiver
+          </button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 style="font-size:16px; margin-bottom:12px;">Assistance Requests from Patients</h3>
+        ${State.helpRequests.map(r => `
+          <div style="padding:12px; background:var(--surface-warm); border:1px solid var(--border); border-radius:12px; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <div style="font-weight:700;">${r.patient} — <span style="font-weight:normal; color:var(--ink-soft);">${r.reason}</span></div>
+              <div class="small muted">${r.time}</div>
+            </div>
+            <button class="btn btn-sm btn-ghost" onclick="resolveHelpRequest()">Mark Resolved ✓</button>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+/* ---- AUDIT LOG VIEW ---- */
+function renderAuditView() {
+  return `
+    <div style="max-width:960px; margin:0 auto; padding:28px 20px;">
+      <div class="flex between center mb20">
+        <div>
+          <h1 style="font-size:24px;">Forensic Audit Trail</h1>
+          <p class="small muted">Tamper-evident timestamped log of all clinical approvals and patient actions.</p>
+        </div>
+        <span class="pill pill-done">Audited & Verified</span>
+      </div>
+
+      <div class="card">
+        <table>
+          <thead>
+            <tr>
+              <th>Timestamp</th>
+              <th>Actor</th>
+              <th>Role</th>
+              <th>Action</th>
+              <th>Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${State.auditLogs.map(l => `
+              <tr>
+                <td style="font-family:monospace; font-weight:600;">${l.time}</td>
+                <td style="font-weight:700;">${l.actor}</td>
+                <td><span class="pill pill-pending" style="font-size:10px;">${l.role}</span></td>
+                <td style="font-weight:600; color:var(--spruce);">${l.action}</td>
+                <td class="small muted">${l.details}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
+}
+
+/* =========================================================================
+   5. MODAL SYSTEM
+   ========================================================================= */
+function openModal(type, payload) {
+  const c = document.getElementById('modalContainer');
+  const p = State.patient;
+
+  if (type === 'qr') {
+    c.innerHTML = `
+      <div class="modal-backdrop" onclick="closeModal(event)">
+        <div class="modal text-center" style="text-align:center;">
+          <div class="modal-head">
+            <h3 style="font-size:17px;">Clinic Check-in Fast-Track QR</h3>
+            <button class="close-btn" onclick="closeModal()">✕</button>
+          </div>
+          <p class="small muted">Present this QR code at Hospital Central Lab or Day Care Reception desk.</p>
+
+          <div class="qr-box">
+            <svg viewBox="0 0 100 100" style="width:100%; height:100%;">
+              <rect x="5" y="5" width="26" height="26" fill="#1C4A40" />
+              <rect x="9" y="9" width="18" height="18" fill="#fff" />
+              <rect x="13" y="13" width="10" height="10" fill="#1C4A40" />
+
+              <rect x="69" y="5" width="26" height="26" fill="#1C4A40" />
+              <rect x="73" y="9" width="18" height="18" fill="#fff" />
+              <rect x="77" y="13" width="10" height="10" fill="#1C4A40" />
+
+              <rect x="5" y="69" width="26" height="26" fill="#1C4A40" />
+              <rect x="9" y="73" width="18" height="18" fill="#fff" />
+              <rect x="13" y="77" width="10" height="10" fill="#1C4A40" />
+
+              <rect x="36" y="8" width="8" height="8" fill="#1C4A40" />
+              <rect x="50" y="8" width="12" height="6" fill="#2C6E5F" />
+              <rect x="36" y="24" width="14" height="6" fill="#1C4A40" />
+              <rect x="56" y="24" width="8" height="8" fill="#B9812E" />
+
+              <rect x="36" y="44" width="28" height="20" fill="#1C4A40" />
+              <rect x="42" y="50" width="16" height="8" fill="#fff" />
+              <rect x="70" y="44" width="14" height="8" fill="#2C6E5F" />
+              <rect x="70" y="60" width="18" height="16" fill="#1C4A40" />
+              <rect x="36" y="72" width="16" height="14" fill="#1C4A40" />
+              <rect x="58" y="76" width="16" height="10" fill="#2C6E5F" />
+            </svg>
+          </div>
+
+          <div style="background:var(--surface-warm); border-radius:12px; padding:10px; margin-top:8px;">
+            <div style="font-weight:700; font-size:13px;">${p.name} (${p.mrn})</div>
+            <div class="small muted">Ordered: Complete Blood Count (CBC) • Dr. K. Rao</div>
+          </div>
+
+          <button class="btn btn-primary btn-block" style="margin-top:16px;" onclick="simulateScan()">
+            ⚡ Simulate Hospital Desk Scanner Zap
+          </button>
+        </div>
+      </div>
+    `;
+  } else if (type === 'wellbeing') {
+    c.innerHTML = `
+      <div class="modal-backdrop" onclick="closeModal(event)">
+        <div class="modal">
+          <div class="modal-head">
+            <div>
+              <h3 style="font-size:18px;">Symptom &amp; Wellbeing Check-in</h3>
+              <p class="small muted">7-day trends help your care coordinator monitor toxicity.</p>
+            </div>
+            <button class="close-btn" onclick="closeModal()">✕</button>
+          </div>
+
+          <div style="background:var(--surface-warm); border-radius:14px; padding:12px; margin-bottom:16px;">
+            <div class="flex between center small mb8">
+              <strong>7-Day Symptom Trajectory</strong>
+              <span class="muted">Energy vs. Pain</span>
+            </div>
+            ${renderSparkline()}
+          </div>
+
+          <div class="grid" style="gap:10px; font-size:13px;">
+            ${[
+              ['Energy Level', 'energy', 3],
+              ['Pain Severity', 'pain', 1],
+              ['Nausea', 'nausea', 1],
+            ].map(([lab, key, val]) => `
+              <div class="flex between center">
+                <span style="font-weight:600;">${lab}</span>
+                <div class="flex gap8">
+                  ${[1,2,3,4,5].map(v => `
+                    <button class="btn btn-sm ${v === val ? 'btn-primary' : 'btn-quiet'}" style="width:28px; height:28px; padding:0;" onclick="this.parentElement.querySelectorAll('button').forEach(b=>b.className='btn btn-sm btn-quiet'); this.className='btn btn-sm btn-primary';">
+                      ${v}
+                    </button>
+                  `).join('')}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+
+          <button class="btn btn-primary btn-block" style="margin-top:20px;" onclick="submitWellbeing()">
+            Record Today's Check-in
+          </button>
+        </div>
+      </div>
+    `;
+  } else if (type === 'summary') {
+    c.innerHTML = `
+      <div class="modal-backdrop" onclick="closeModal(event)">
+        <div class="modal" style="max-width:560px;">
+          <div class="modal-head">
+            <div>
+              <h3 style="font-size:18px;">CareBridge Patient Care Summary</h3>
+              <p class="small muted">National Cancer Grid Patient Summary Sheet</p>
+            </div>
+            <button class="close-btn" onclick="closeModal()">✕</button>
+          </div>
+
+          <div style="background:var(--surface-warm); border-radius:14px; padding:16px; font-size:12.5px; line-height:1.6; margin-bottom:16px;">
+            <div><strong>Patient Name:</strong> ${p.name} (Age: ${p.age}, ${p.gender})</div>
+            <div><strong>MRN:</strong> <span style="font-family:monospace;">${p.mrn}</span></div>
+            <div><strong>Diagnosis:</strong> ${p.diagnosis}</div>
+            <div><strong>Current Stage:</strong> Active Treatment — Cycle ${p.cycle} of ${p.totalCycles}</div>
+            <div><strong>Primary Oncologist:</strong> ${p.oncologist} (${p.department})</div>
+            <div><strong>Next Appointment:</strong> ${p.nextAppt}</div>
+            <div style="margin-top:8px; padding-top:8px; border-top:1px solid var(--border);">
+              <strong>Active Follow-up Orders:</strong>
+              <ul style="padding-left:18px; margin-top:4px;">
+                <li>Complete Blood Count (CBC) before Tuesday — Ground Floor Central Lab</li>
+                <li>Serum Creatinine Kidney Function Test — Biochemistry Dept</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="flex gap8">
+            <button class="btn btn-primary btn-block" onclick="window.print()">🖨️ Print Summary Sheet</button>
+            <button class="btn btn-ghost" onclick="alert('Secure encrypted summary link copied to clipboard.')">🔗 Share</button>
+          </div>
+        </div>
+      </div>
+    `;
+  } else if (type === 'help') {
+    c.innerHTML = `
+      <div class="modal-backdrop" onclick="closeModal(event)">
+        <div class="modal">
+          <div class="modal-head">
+            <h3 style="font-size:18px;">Request Assistance from Care Team</h3>
+            <button class="close-btn" onclick="closeModal()">✕</button>
+          </div>
+          <p class="small muted mb12">Our oncology navigator will call you to resolve any barrier.</p>
+
+          <div class="grid" style="gap:8px; margin-bottom:16px;">
+            ${[
+              "Transit or distance difficulty reaching hospital",
+              "Cannot afford prescribed lab test / medication",
+              "Do not understand what test is needed",
+              "Experiencing fever above 100.4°F or severe symptoms"
+            ].map((opt, i) => `
+              <label style="display:flex; align-items:center; gap:8px; padding:10px; border:1px solid var(--border); border-radius:10px; font-size:12.5px; cursor:pointer;">
+                <input type="radio" name="helpReason" ${i === 0 ? 'checked' : ''}>
+                <span>${opt}</span>
+              </label>
+            `).join('')}
+          </div>
+
+          <button class="btn btn-amber btn-block" onclick="submitHelp()">Submit Request to Coordinator</button>
+        </div>
+      </div>
+    `;
+  }
+}
+
+function closeModal(e) {
+  if (!e || e.target.classList.contains('modal-backdrop') || e.target.classList.contains('close-btn')) {
+    document.getElementById('modalContainer').innerHTML = '';
+  }
+}
+
+function renderSparkline() {
+  const log = State.wellbeingLog;
+  const w = 360, h = 60, pad = 12;
+  const step = (w - 2 * pad) / (log.length - 1);
+
+  function path(key) {
+    return log.map((l, i) => {
+      const v = l[key] || 2;
+      const x = pad + i * step;
+      const y = h - pad - ((v - 1) / 4) * (h - 2 * pad);
+      return `${i === 0 ? 'M' : 'L'}${x.toFixed(1)},${y.toFixed(1)}`;
+    }).join(' ');
+  }
+
+  return `
+    <svg viewBox="0 0 ${w} ${h}" class="spark-svg">
+      <path d="${path('energy')}" fill="none" stroke="#2C6E5F" stroke-width="2.5" stroke-linecap="round" />
+      <path d="${path('pain')}" fill="none" stroke="#B34A3B" stroke-width="2" stroke-dasharray="3 2" stroke-linecap="round" />
+      ${log.map((l, i) => `<text x="${pad + i * step}" y="${h - 1}" font-size="8.5" fill="#7A8985" text-anchor="middle">${l.d}</text>`).join('')}
+    </svg>
+  `;
+}
+
+// 6. EVENT HANDLERS & SIMULATIONS
+function switchRole(role) {
+  State.role = role;
+  render();
+}
+
+function setLanguage(code) {
+  State.language = code;
+  document.getElementById('langMenu').style.display = 'none';
+  render();
+}
+
+function toggleLangMenu() {
+  const m = document.getElementById('langMenu');
+  m.style.display = m.style.display === 'none' ? 'block' : 'none';
+}
+
+function completeTask(taskId) {
+  const tsk = State.tasks.find(t => t.id === taskId);
+  if (tsk) {
+    tsk.status = 'Completed';
+    State.auditLogs.unshift({
+      time: "Just now",
+      actor: State.patient.name,
+      role: "Patient",
+      action: "Completed follow-up action",
+      details: `Marked '${t(tsk.titleKey)}' as done via Digital Pass`
+    });
+    render();
+  }
+}
+
+function simulateScan() {
+  document.getElementById('modalContainer').innerHTML = '';
+  completeTask('TASK-101');
+  alert(`⚡ DESK SCANNER SUCCESS!\n\nPatient: ${State.patient.name} (MRN: ${State.patient.mrn})\nPrescribed: CBC with Differential (Dr. K. Rao)\n\nHospital System Status Updated: [Sample Collected at Central Lab]`);
+}
+
+function submitWellbeing() {
+  document.getElementById('modalContainer').innerHTML = '';
+  State.wellbeingLog.push({ d: "Today", energy: 4, pain: 1, nausea: 1 });
+  if (State.wellbeingLog.length > 7) State.wellbeingLog.shift();
+  State.auditLogs.unshift({
+    time: "Just now",
+    actor: State.patient.name,
+    role: "Patient",
+    action: "Submitted Daily Wellbeing Check-in",
+    details: "Energy: 4/5, Pain: 1/5, Nausea: 1/5 logged"
+  });
+  alert("✓ Wellbeing check-in recorded. Your care team can see your 7-day trajectory.");
+  render();
+}
+
+function submitHelp() {
+  document.getElementById('modalContainer').innerHTML = '';
+  State.helpRequests.unshift({
+    patient: State.patient.name,
+    reason: "Transport difficulty from rural village",
+    status: "Open",
+    time: "Just now"
+  });
+  State.auditLogs.unshift({
+    time: "Just now",
+    actor: State.patient.name,
+    role: "Patient",
+    action: "Assistance Request Logged",
+    details: "Coordinator phone outreach dispatched"
+  });
+  alert("Help request received. An oncology patient navigator will contact you shortly.");
+  render();
+}
+
+function resolveHelpRequest() {
+  State.helpRequests.shift();
+  alert("Assistance request resolved: Rural travel reimbursement voucher provided.");
+  render();
+}
+
+// 7. HERO DEMO 10-STEP SYSTEM
+const HERO_STEPS = [
+  { step: 1, role: 'clinician', title: "Doctor opens patient record", desc: "Dr. Rao views Ramesh Varma on the oncology dashboard." },
+  { step: 2, role: 'clinician', title: "Prescribe Pre-Chemo Labs", desc: "Doctor orders CBC and Creatinine prior to chemotherapy Cycle 3." },
+  { step: 3, role: 'clinician', title: "AI Simplification & Translation", desc: "Engine converts jargon into simple Telugu, Hindi, and English What/Why/Where/When tasks." },
+  { step: 4, role: 'clinician', title: "Doctor Reviews & Approves", desc: "Safety check: Doctor approves before anything reaches the patient." },
+  { step: 5, role: 'patient', title: "Dispatched to Patient Pass", desc: "Patient receives WhatsApp magic link in their primary language." },
+  { step: 6, role: 'patient', title: "Patient opens Telugu Pass", desc: "Ramesh views clear instructions without needing to log in." },
+  { step: 7, role: 'patient', title: "Patient marks: 'I have completed this'", desc: "Ramesh taps completed after blood draw at Central Lab." },
+  { step: 8, role: 'clinician', title: "Closure Queue updates: Loop Closed", desc: "Hospital dashboard turns green: Pre-chemo test verified." },
+  { step: 9, role: 'audit', title: "Forensic Audit Logged", desc: "Full timestamp, actor, role, and action saved permanently." },
+  { step: 10, role: 'clinician', title: "Hospital KPI Achieved", desc: "Follow-up closure rate reaches 85%." },
+];
+
+function toggleHeroDemo() {
+  const b = document.getElementById('heroBanner');
+  if (b.style.display === 'none') {
+    b.style.display = 'flex';
+    State.heroStep = 1;
+    applyHeroStep();
+  } else {
+    b.style.display = 'none';
+    State.heroStep = 0;
+  }
+}
+
+function advanceDemo() {
+  if (State.heroStep < 10) {
+    State.heroStep++;
+    applyHeroStep();
+  } else {
+    alert("🎉 10-Step Demo Complete! You have seen the complete end-to-end CareBridge follow-up closure loop.");
+    toggleHeroDemo();
+  }
+}
+
+function resetDemo() {
+  State.heroStep = 1;
+  State.tasks[0].status = 'Pending';
+  applyHeroStep();
+}
+
+function applyHeroStep() {
+  const s = HERO_STEPS[State.heroStep - 1] || HERO_STEPS[0];
+  document.getElementById('heroStepNum').textContent = s.step;
+  document.getElementById('heroStepTitle').textContent = s.title;
+  document.getElementById('heroStepDesc').textContent = s.desc;
+  switchRole(s.role);
+}
+
+// Close dropdown on outside click
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.lang-dropdown-wrap')) {
+    const m = document.getElementById('langMenu');
+    if (m) m.style.display = 'none';
+  }
+});
+
+// INITIALIZE
+render();
+</script>
+</body>
+</html>

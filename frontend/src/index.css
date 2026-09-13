@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-parchment: #F8F6F1;
+    --border-stone: #E2DDD2;
+    --primary-spruce: #2C6E5F;
+    --primary-deep: #1C4A40;
+    --primary-tint: #E5EEEB;
+    --amber-gold: #B9812E;
+    --amber-tint: #F6ECD8;
+    --brick-alert: #B34A3B;
+    --brick-tint: #F5E5E0;
+    --ink: #1B2A27;
+    --ink-muted: #62726E;
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+    color: var(--ink);
+    background-color: var(--bg-parchment);
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: -0.01em;
+  }
+
+  h1, h2, h3, .font-editorial {
+    font-family: 'Fraunces', Georgia, serif;
+    letter-spacing: -0.015em;
+  }
+  
+  /* Multilingual script adjustments */
+  [lang="te"] {
+    font-family: 'Noto Sans Telugu', 'Plus Jakarta Sans', sans-serif;
+    line-height: 1.65;
+  }
+
+  [lang="hi"], [lang="mr"] {
+    font-family: 'Noto Sans Devanagari', 'Plus Jakarta Sans', sans-serif;
+    line-height: 1.65;
+  }
+
+  [lang="ta"] {
+    font-family: 'Noto Sans Tamil', 'Plus Jakarta Sans', sans-serif;
+    line-height: 1.65;
+  }
+
+  [lang="bn"] {
+    font-family: 'Noto Sans Bengali', 'Plus Jakarta Sans', sans-serif;
+    line-height: 1.65;
+  }
+
+  [lang="kn"] {
+    font-family: 'Noto Sans Kannada', 'Plus Jakarta Sans', sans-serif;
+    line-height: 1.65;
+  }
+
+  [lang="ml"] {
+    font-family: 'Noto Sans Malayalam', 'Plus Jakarta Sans', sans-serif;
+    line-height: 1.65;
+  }
+}
+
+/* Custom Healthcare UI styling */
+.phone-mockup-frame {
+  width: 390px;
+  min-height: 780px;
+  max-height: 844px;
+  border-radius: 44px;
+  box-shadow: 0 0 0 10px #1C4A40, 0 30px 60px -15px rgba(27, 42, 39, 0.45);
+  background-color: #F8F6F1;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.phone-mockup-notch {
+  width: 130px;
+  height: 22px;
+  background-color: #1C4A40;
+  border-bottom-left-radius: 14px;
+  border-bottom-right-radius: 14px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 50;
+}
+
+/* Subtle scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D8D2C4;
+  border-radius: 99px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #B8B09F;
+}
+
+/* Tactile button micro-interactions */
+.btn-press {
+  transition: transform 0.12s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.15s ease;
+}
+.btn-press:active {
+  transform: scale(0.97);
+}
