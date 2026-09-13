@@ -31,7 +31,7 @@ class NumberedCanvas(canvas.Canvas):
             self.setFont("Helvetica", 8)
             self.setFillColor(colors.HexColor("#64748b"))
             # Header
-            self.drawString(54, 11 * 72 - 36, "CareBridge NCG — Project Technical Submission Report")
+            self.drawString(54, 11 * 72 - 36, "CareBridge — Project Technical Submission Report")
             self.setStrokeColor(colors.HexColor("#e2e8f0"))
             self.setLineWidth(0.75)
             self.line(54, 11 * 72 - 42, 8.5 * 72 - 54, 11 * 72 - 42)
@@ -163,13 +163,13 @@ def generate_pdf(output_filename="CareBridge_Project_Report.pdf"):
     # ==================== COVER PAGE ====================
     story.append(Spacer(1, 40))
     story.append(Paragraph("PROJECT TECHNICAL REPORT • HEALTHCARE INFORMATICS", tag_style))
-    story.append(Paragraph("CareBridge NCG", title_style))
+    story.append(Paragraph("CareBridge", title_style))
     story.append(Paragraph("Multilingual Cancer-Care Follow-up & Care-Instruction Closure Platform", subtitle_style))
     story.append(HRFlowable(width="100%", thickness=2, color=brand_teal, spaceBefore=4, spaceAfter=16))
 
     story.append(Paragraph(
-        "An assistive, clinician-validated, and human-in-the-loop health delivery platform designed for the "
-        "National Cancer Grid (NCG) ecosystem. Bridging the critical longitudinal communication gap between complex "
+        "An assistive, clinician-validated, and human-in-the-loop health delivery platform designed for "
+        "comprehensive cancer care follow-up closure. Bridging the critical longitudinal communication gap between complex "
         "oncology discharge summaries and patient homes across 11 Indian regional languages.",
         lead_style
     ))
@@ -178,7 +178,7 @@ def generate_pdf(output_filename="CareBridge_Project_Report.pdf"):
 
     meta_data = [
         [Paragraph("<b>Author / Developer:</b>", body_style), Paragraph("Jitesh Reddy", body_style)],
-        [Paragraph("<b>Target Institution / Context:</b>", body_style), Paragraph("National Cancer Grid (NCG) / Tertiary Oncology Centers", body_style)],
+        [Paragraph("<b>Target Domain / Context:</b>", body_style), Paragraph("Tertiary Oncology Centers & Cancer Care Hospitals", body_style)],
         [Paragraph("<b>Repository:</b>", body_style), Paragraph("https://github.com/Jiteshreddy123/CareBridge", body_style)],
         [Paragraph("<b>Live Web Application:</b>", body_style), Paragraph("https://jiteshreddy123.github.io/CareBridge/", body_style)],
         [Paragraph("<b>Core Technology Stack:</b>", body_style), Paragraph("React 19, TypeScript, FastAPI, Python 3.10+, Tailwind CSS", body_style)],
@@ -203,7 +203,7 @@ def generate_pdf(output_filename="CareBridge_Project_Report.pdf"):
     # ==================== SECTION 1 & 2 ====================
     story.append(Paragraph("1. Executive Summary", h1_style))
     story.append(Paragraph(
-        "In high-volume public cancer hospitals across India, treatment failure and disease progression often stem not "
+        "In high-volume cancer hospitals across India, treatment failure and disease progression often stem not "
         "from procedural shortcomings inside hospitals, but from what happens <i>after</i> discharge. Oncology discharge "
         "summaries are densely filled with English medical jargon, abbreviations (e.g., CBC w/ diff, PET-CT contrast, "
         "Cap Capecitabine), and handwritten doctor notes. Over 75% of patients and family caregivers travel from rural or "
@@ -213,7 +213,7 @@ def generate_pdf(output_filename="CareBridge_Project_Report.pdf"):
     story.append(Paragraph(
         "Misunderstanding crucial prerequisite steps—such as fasting for a PET-CT, scheduling pre-chemo blood tests, or recognizing "
         "febrile neutropenia—leads to rescheduled appointments, acute toxicities, and alarming treatment dropout rates. "
-        "<b>CareBridge NCG</b> resolves this crisis by transforming hospital orders into structured, doctor-approved, plain-language "
+        "<b>CareBridge</b> resolves this crisis by transforming hospital orders into structured, doctor-approved, plain-language "
         "care passes across 11 Indian languages with closed-loop telemetry and tracking.",
         body_style
     ))
@@ -254,7 +254,7 @@ def generate_pdf(output_filename="CareBridge_Project_Report.pdf"):
     # ==================== SECTION 3: ARCHITECTURE & MODULES ====================
     story.append(Paragraph("3. System Architecture & Tech Stack", h1_style))
     story.append(Paragraph(
-        "CareBridge NCG is engineered with a modular, decoupled full-stack architecture designed for enterprise reliability "
+        "CareBridge is engineered with a modular, decoupled full-stack architecture designed for enterprise reliability "
         "and offline-first progressive accessibility on low-tier mobile devices.",
         body_style
     ))
@@ -305,7 +305,7 @@ def generate_pdf(output_filename="CareBridge_Project_Report.pdf"):
     story.append(Paragraph("5. Projected Clinical Outcomes & Impact Metrics", h1_style))
 
     metrics_data = [
-        [Paragraph("<b>Metric Indicator</b>", body_style), Paragraph("<b>Standard Discharge Baseline</b>", body_style), Paragraph("<b>With CareBridge NCG Platform</b>", body_style)],
+        [Paragraph("<b>Metric Indicator</b>", body_style), Paragraph("<b>Standard Discharge Baseline</b>", body_style), Paragraph("<b>With CareBridge Platform</b>", body_style)],
         [Paragraph("Treatment Dropout Rate", body_style), Paragraph("28% - 35% in public registries", body_style), Paragraph("<b>< 12%</b> (Projected 60% relative reduction)", body_style)],
         [Paragraph("Protocol Violations (Fasting/Scans)", body_style), Paragraph("18% - 24% rescheduling rate", body_style), Paragraph("<b>< 4%</b> through plain-language What & Why cards", body_style)],
         [Paragraph("Language Reach", body_style), Paragraph("Limited to English / basic Hindi", body_style), Paragraph("<b>11 Indian Regional Languages</b> supported", body_style)],
@@ -343,7 +343,7 @@ def generate_pdf(output_filename="CareBridge_Project_Report.pdf"):
 
     story.append(Paragraph("7. Conclusion", h1_style))
     story.append(Paragraph(
-        "CareBridge NCG demonstrates how thoughtful, human-centric software engineering can overcome systemic healthcare "
+        "CareBridge demonstrates how thoughtful, human-centric software engineering can overcome systemic healthcare "
         "inequities. By respecting clinical boundaries through human-in-the-loop validation while democratizing medical instructions "
         "across 11 Indian languages, CareBridge ensures that geographic, economic, and linguistic barriers never stand between a cancer patient and their curative journey.",
         body_style
