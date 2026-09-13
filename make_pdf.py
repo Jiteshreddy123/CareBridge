@@ -333,8 +333,7 @@ def generate_pdf(output_filename="CareBridge_Project_Report.pdf"):
 
     links = [
         "<b>Live Web Demo:</b> <font color='#0f766e'><u>https://jiteshreddy123.github.io/CareBridge/</u></font> (Fully interactive, clinician portal & patient mobile simulation)",
-        "<b>GitHub Repository:</b> <font color='#0f766e'><u>https://github.com/Jiteshreddy123/CareBridge</u></font> (Full source code, API services, and documentation)",
-        "<b>FastAPI Swagger Docs:</b> <code>http://localhost:8000/docs</code> (Interactive OpenAPI endpoints for tasks, patients, and audit trails)"
+        "<b>GitHub Repository:</b> <font color='#0f766e'><u>https://github.com/Jiteshreddy123/CareBridge</u></font> (Full source code, API services, and documentation)"
     ]
     for l in links:
         story.append(Paragraph(f"• {l}", bullet_style))
